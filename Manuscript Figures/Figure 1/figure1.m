@@ -3,7 +3,9 @@ close all
 clear all
 
 %% Load system parameters
-load('./Data/Parameters/s82 learningTrace/allv.mat',...
+p = mfilename('fullpath'); %Full path of current file
+
+load('./Manuscript Figures/Data/Parameters/s82 learningTrace/allv.mat',...
     'systpEst','estimPar','usts');
 indValStates = [1 2 5 6 9 10]; %Valid states
 sFuns        = struct('syspec',@syspec_ssim_v15,'ffun',@ffun_ssim_v15,'gfun',@gfun_ssim_v13);
