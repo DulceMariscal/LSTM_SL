@@ -23,7 +23,8 @@ my_set_default(fs.def,lw.lines,10);
 
 % Load ANA paradigm------------------------------------------------------
 d              = abs(usts.extra.dest.IS);
-[parad, names] = loadParadigm('ANA',d);
+% [parad, names] = loadParadigm('ANA',d);
+[parad, names] = loadParadigm('Switch2',d);
 
 simp = struct('oneStep', false, 'nt', parad.n.ttot,'u', parad.u,...
               't', parad.t,  'udt2', [], 'Ts', []);
@@ -61,20 +62,20 @@ sz.dot      = 50;
 figure('Color','white','Units','normalized','Position',[0 0 .9 .9]);
 
 %% S11 (A) perturbation + output + error------------------------------------
-sp(1,1)     = subplot(2,6,1:4);
+sp(1,1)     = subplot(3,6,1:6);
 plot(nanTrans(parad.u,parad.transitions),'color', cols.u), hold on, 
 plot(nanTrans(parad.z,parad.transitions),'color', cols.z),
 plot(nanTrans(parad.y,parad.transitions),'color', cols.y)
 % Dots
 tA1     = parad.epochs(names.A1).tstart:parad.epochs(names.A1).tend;
-tA2     = parad.epochs(names.A2).tstart:parad.epochs(names.A2).tend;
+% tA2     = parad.epochs(names.A2).tstart:parad.epochs(names.A2).tend;
 tstA1   = tA1(2); 
 scatter(tstA1, parad.z(tstA1),sz.dot,cols.z,'filled',...
     markers.a1,'MarkerEdgeColor',cols.zMark,'LineWidth',lw.mark);
-tstA2   = tA2(2); 
-scatter(tstA2, parad.z(tstA2),sz.dot,cols.z,'filled',...
-    markers.a2,'MarkerEdgeColor',cols.zMark,'LineWidth',lw.mark);
-% Extra
+% tstA2   = tA2(2); 
+% scatter(tstA2, parad.z(tstA2),sz.dot,cols.z,'filled',...
+%     markers.a2,'MarkerEdgeColor',cols.zMark,'LineWidth',lw.mark);
+% % Extra
 leg1h = legend(legs.A,'Location','southeast','Box','off',...
     'AutoUpdate','off','FontSize',fs.sma);
 xticklabels('')
@@ -82,8 +83,10 @@ ylabel(labels.y)
 box off;
 axis tight
 
+
+
 %% S21 (C) details about the states----------------------------------------
-sp(2,1) = subplot(2,6,7:10);
+sp(2,1) = subplot(3,6,7:12);
 plh = plot(parad.t,parad.x);
 set(plh, {'Color'}, mat2cell(cols.states, ones(1,n.states), 3 ));
 set(plh, {'LineWidth'}, liWi.states);
@@ -94,6 +97,23 @@ xlabel(labels.x)
 ylabel(labels.y)
 box off
 axis tight
+
+%%
+
+sp(3,1) = subplot(3,6,13:18);
+plot(nanTrans(-parad.y,parad.transitions))
+hold on 
+% plot(nanTrans(parad.u,parad.transitions),'color', cols.u)
+% set(plh, {'Color'}, mat2cell(cols.states, ones(1,n.states), 3 ));
+% set(plh, {'LineWidth'}, liWi.states);
+% set(plh, {'LineStyle'}, liSt.states);
+% leg1h = legend(legs.C,'Location','southeast','Box','off',...
+%     'AutoUpdate','off','FontSize',fs.sma,'NumColumns',3);
+xlabel(labels.x)
+ylabel('SLA')
+box off
+axis tight
+
 
 %% S12 (B) details about A1 and A2-----------------------------------------
 sp(1,2) = subplot(2,6,6); 
